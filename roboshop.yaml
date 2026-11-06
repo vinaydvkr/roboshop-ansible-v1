@@ -3,9 +3,9 @@
   connection: local
   become: true
   vars:
-    instance: ["mongodb" , "redis" , "myql" , "rabbitmq"]
+    instance: ["mongodb" , "redis" , "mysql" , "rabbitmq"]
     action: create
-    damain_name: vinayexpense.store
+    domain_name: vinayexpense.store
     ami_id: ami-0055977a6e828a4f4
   tasks:
   - name: create ece instance
@@ -13,8 +13,8 @@
       name: "roboshop-{{ item }}"
       instance_type: t3.micro
       image_id: "{{ ami_id }}"
-      loop: "{{ instance }}"
       region: us-east-1
+    loop: "{{ instance }}"  
     when: action == "create"
     register: ec2_output
     
