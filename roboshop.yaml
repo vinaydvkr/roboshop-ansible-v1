@@ -15,7 +15,7 @@
       image_id: "{{ ami_id }}"
       loop: "{{ instance }}"
       region: us-east-1
-    when: action == create
+    when: action == "create"
     register: ec2_output
     
   - name: create the records
@@ -28,7 +28,7 @@
       overwrite: true
       value: "{{ item.instances[0].private_ip_address }}"
     loop: "{{ ec2_output.results }}"
-    when: action == create
+    when: action == "create"
 
   # - name: delete records
   #   amazon.aws.route53:
