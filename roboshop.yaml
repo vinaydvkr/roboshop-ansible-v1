@@ -1,0 +1,55 @@
+- name: creation of ec2 instance and r53 recorts for roboshop
+  hosts: local
+  connection: local
+  become: true
+  vars:
+    instance: ["mongodb" , "redis" , "myql" , "rabbitmq"]
+    action: create
+    damain_name: vinayexpense.store
+    ami_id: ami-0055977a6e828a4f4
+  tasks:
+  - name: create ece instance
+    amazon.aws.ec2_instance:
+      name: "roboshop-{{ item }}"
+      instance_type: t3.micro
+      image_id: "{{ ami_id }}"
+      loop: "{{ instance }}"
+      region: us-east-1
+    when: action == create
+    register: ec2_output
+    
+  - name: create the records
+    amazon.aws.route53:
+      state: present
+      zone: "{{ domain_name }}"
+      ttl: 1
+      type: A
+      record: "{{ item.item }}.{{ domain_name }}"
+      overwrite: true
+      value: "{{ item.instances[0].private_ip_address }}"
+    loop: "{{ ec2_output.results }}"
+    when: action == create
+
+  # - name: delete records
+  #   amazon.aws.route53:
+  #     state: absent
+  #     zone: "{{ domain_name }}"
+  #     record: "{{ domain_name }}"
+  #     ttl: 1
+  #     type: A
+  #   loop: "{{ instance }}"
+  #   when: action == delete
+
+  # - name: delete ec2 instance
+  #   amazon.aws.ec2_instance:
+  #     name: "roboshop-{{ item }}"
+  #     state: absent
+  #     image_id: "{{ ami_id }}"
+  #     region: us-east-1
+  #     wait: false
+  #   loops: "{{ instance }}"
+  #   when: action == delete
+
+
+
+
