@@ -1,7 +1,7 @@
 - name: configure mysql
   hosts: mysql
   become: true
-  task:
+  tasks:
     - name: enable mysql
       command: dnf module enable mysql:8.4 -y
 
@@ -18,4 +18,5 @@
 
     - name: Set root password
       command: mysql_secure_installation --set-root-pass RoboShop@1
+
 
