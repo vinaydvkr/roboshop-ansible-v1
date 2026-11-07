@@ -1,0 +1,3 @@
+- name: create mongodb server
+  hosts: mongodb
+  become: yes
