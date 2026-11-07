@@ -65,7 +65,7 @@
 
 
 - name: Create EC2 instances and Route 53 records
-  hosts: localhost
+  hosts: local
   connection: local
   gather_facts: false
 
