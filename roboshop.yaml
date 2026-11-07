@@ -90,12 +90,30 @@
       amazon.aws.route53:
         state: present
         zone: "{{ domain_name }}"
-        ttl: 60
+        ttl: 1
         type: A
         record: "{{ item.item }}.{{ domain_name }}"
         overwrite: true
         value: "{{ item.instances[0].private_ip_address }}"
       loop: "{{ ec2_output.results }}"
 
+    - name: Delete Route 53 records
+      amazon.aws.route53:
+        state: absent
+        zone: "{{ domain_name }}"
+        record: "{{ item }}.{{ domain_name }}"
+        ttl: 1
+        type: A
+      loop: "{{ instance }}"
+      when: action == "delete"
+
+    - name: Delete EC2 instances
+      amazon.aws.ec2_instance:
+        name: "roboshop-{{ item }}"
+        state: absent
+        region: us-east-1
+        wait: false
+      loop: "{{ instance }}"
+      when: action == "delete"
 
 
