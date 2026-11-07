@@ -1,79 +1,55 @@
-- name: create ec2 instances and r53 records
+- name: creation of ec2 instance and r53 recorts for roboshop
   hosts: local
   connection: local
+  become: true
   vars:
-    # ansible-playbook roboshop.yaml -e "instances=['mongodb', 'redis']"
-    # ansible-playbook roboshop.yaml -e "action=delete"
-    instances: ["mongodb", "rabbitmq", "redis", "mysql"]
-    action: create
+    instance: ["mongodb" , "redis" , "mysql" , "rabbitmq"]
+    instance_action: create
     domain_name: vinayexpense.store
     ami_id: ami-0055977a6e828a4f4
   tasks:
-  - name: create ec2 instance
+  - name: create ece instance
     amazon.aws.ec2_instance:
       name: "roboshop-{{ item }}"
-      image_id: "{{ ami_id }}"
       instance_type: t3.micro
-      security_groups:
-      - roboshop-common
-      - "roboshop-{{ item }}"
+      image_id: "{{ ami_id }}"
       region: us-east-1
-    loop: "{{ instances }}"
-    when: action == "create"
+    loop: "{{ instance }}"  
+    when: instance_action == "create"
     register: ec2_output
-
-  # - name: print ec2 creation output
-  #   debug:
-  #     msg: "{{ ec2_output }}"
-
-  - name: create R53 record
+    
+  - name: create the records
     amazon.aws.route53:
       state: present
       zone: "{{ domain_name }}"
-      record: "{{ item.item }}.{{ domain_name }}" # mongodb.daws92s.store
-      type: A
       ttl: 1
-      value: "{{ item.instances[0].private_ip_address }}"
+      type: A
+      record: "{{ item.item }}.{{ domain_name }}"
       overwrite: true
+      value: "{{ item.instances[0].private_ip_address }}"
     loop: "{{ ec2_output.results }}"
-    when: action == "create"
+    when: instance_action == "create"
 
-  # - name: create R53 record for frontend
-  #   amazon.aws.route53:
-  #     state: present
-  #     zone: "{{ domain_name }}"
-  #     record: "{{ domain_name }}" # daws92s.store points to frontend public IP
-  #     type: A
-  #     ttl: 1
-  #     value: "{{ item.instances[0].public_ip_address }}"
-  #     overwrite: true
-  #   loop: "{{ ec2_output.results }}"
-  #   when: action == "create" and item.item == "frontend"
-
-  # - name: delete R53 records
-  #   amazon.aws.route53:
-  #     state: absent
-  #     zone: "{{ domain_name }}"
-  #     record: "{{ item }}.{{ domain_name }}"
-  #     ttl: 1
-  #     type: A
-  #   loop: "{{ instances }}"
-  #   when: action == "delete"
-
-  # - name: delete R53 record for frontend
+  # - name: delete records
   #   amazon.aws.route53:
   #     state: absent
   #     zone: "{{ domain_name }}"
   #     record: "{{ domain_name }}"
   #     ttl: 1
   #     type: A
-  #   when: action == "delete" 
+  #   loop: "{{ instance }}"
+  #   when: action == delete
 
-  # - name: delete ec2 instances
+  # - name: delete ec2 instance
   #   amazon.aws.ec2_instance:
-  #     state: absent
   #     name: "roboshop-{{ item }}"
+  #     state: absent
+  #     image_id: "{{ ami_id }}"
   #     region: us-east-1
   #     wait: false
-  #   loop: "{{ instances }}"
-  #   when: action == "delete"
+  #   loops: "{{ instance }}"
+  #   when: action == delete
+
+
+
+
