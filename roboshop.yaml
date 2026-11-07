@@ -105,7 +105,7 @@
         ttl: 1
         type: A
       loop: "{{ instance }}"
-      when: action == "delete"
+      when: instance_action == "delete"
 
     - name: Delete EC2 instances
       amazon.aws.ec2_instance:
@@ -114,6 +114,6 @@
         region: us-east-1
         wait: false
       loop: "{{ instance }}"
-      when: action == "delete"
+      when: instance_action == "delete"
 
 
