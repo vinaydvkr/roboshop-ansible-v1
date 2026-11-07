@@ -47,7 +47,7 @@
       image_id: "{{ ami_id }}"
       region: us-east-1
       wait: false
-    loops: "{{ instance }}"
+    loop: "{{ instance }}"
     when: action == delete
 
 
