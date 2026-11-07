@@ -30,25 +30,25 @@
     loop: "{{ ec2_output.results }}"
     when: instance_action == "create"
 
-  # - name: delete records
-  #   amazon.aws.route53:
-  #     state: absent
-  #     zone: "{{ domain_name }}"
-  #     record: "{{ domain_name }}"
-  #     ttl: 1
-  #     type: A
-  #   loop: "{{ instance }}"
-  #   when: action == delete
+  - name: delete records
+    amazon.aws.route53:
+      state: absent
+      zone: "{{ domain_name }}"
+      record: "{{ domain_name }}"
+      ttl: 1
+      type: A
+    loop: "{{ instance }}"
+    when: action == delete
 
-  # - name: delete ec2 instance
-  #   amazon.aws.ec2_instance:
-  #     name: "roboshop-{{ item }}"
-  #     state: absent
-  #     image_id: "{{ ami_id }}"
-  #     region: us-east-1
-  #     wait: false
-  #   loops: "{{ instance }}"
-  #   when: action == delete
+  - name: delete ec2 instance
+    amazon.aws.ec2_instance:
+      name: "roboshop-{{ item }}"
+      state: absent
+      image_id: "{{ ami_id }}"
+      region: us-east-1
+      wait: false
+    loops: "{{ instance }}"
+    when: action == delete
 
 
 
