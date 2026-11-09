@@ -3,8 +3,8 @@
   become: true
   tasks:
     - name: Install Erlang and RabbitMQ server
-      ansible.builtin.package:
+      dnf:
         name:
-          - erlang
-          - rabbitmq-server
+        - erlang
+        - rabbitmq-server
         state: present
