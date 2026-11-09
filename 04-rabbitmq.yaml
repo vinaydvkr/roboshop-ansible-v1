@@ -4,6 +4,7 @@
   tasks:
     - name: install erlang rabbitmq-server
       ansible.builtin.package:
-        - erlang
-        - rabbitmq-server
+        name:
+          - erlang
+          - rabbitmq-server
       state: present
