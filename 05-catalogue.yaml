@@ -48,4 +48,8 @@
         src: /tmp/catalogue.zip
         dest: /app
         remote_src: true
+
+    - name: Install the libraries
+      community.general.npm:
+        path: /app
         
