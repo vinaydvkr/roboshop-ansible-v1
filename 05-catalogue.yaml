@@ -53,13 +53,33 @@
       community.general.npm:
         path: /app
 
+    - name: copy catalogue services
+      ansible.builtin.service:
+        src: catalogue.service.j2
+        dest: /etc/systemd/system/catalogue.service
+
+    - name: install mongodb-mongosh
+      ansible.builtin.package:
+        name: mongodb-mongosh
+        state: present
+
+    - name: check the products loaded or not
+      command: mongosh --host "{{ mongodb_host }}" --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()'
+      register: product_count
+
+    - name: print the product count
+      ansible.builtin.debug:  
+        msg: "{{ product_count }}"
+
+    - name: load the products
+      shell: mongosh --host "{{ mongodb_host }}" < /app/db/master-data.js
+      when: product_count.stdout | int == 0
+
     - name: daemon-reload
       ansible.builtin.systemd_service:
-       name: daemon-reload
-       state: restarted
        daemon_reload: true
 
-    - name: start and enable catalogue
+    - name: start and enable catalogu e
       ansible.builtin.service:
         name: catalogue
         state: restarted
