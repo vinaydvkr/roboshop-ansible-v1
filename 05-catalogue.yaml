@@ -59,7 +59,7 @@
         dest: /etc/systemd/system/catalogue.service
 
     - name: install mongodb-mongosh
-      ansible.builtin.package:
+      dnf:
         name: mongodb-mongosh
         state: present
 
