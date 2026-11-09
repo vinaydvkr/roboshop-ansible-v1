@@ -27,4 +27,10 @@
       ansible.builtin.file:
         path: /app
         state: absent
+
+    - name: remove catalogue.zip
+      file:
+        path: /tmp/catalogue.zip
+        state: absent
+
         
