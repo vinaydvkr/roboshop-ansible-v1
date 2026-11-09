@@ -68,12 +68,6 @@
         name: mongodb-mongosh
         state: present
 
-    # - name: install mongodb-mongosh
-    #   dnf:
-    #     name: mongodb-mongosh
-    #     state: present
-        
-
     - name: check the products loaded or not
       command: mongosh --host "{{ mongodb_host }}" --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()'
       register: product_count
