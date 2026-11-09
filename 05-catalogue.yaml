@@ -38,14 +38,14 @@
         path: /app
         state: present
 
-    - name: download the application
-      get_url:
-      url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip
-      dest: /tmp/catalogue.zip   
+    - name: Download the application archive
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip
+        dest: /tmp/catalogue.zip
 
-    - name: unzip the file catalogue.zip
-      ansible.builtin.archeive:
-        path: /tmp/catalogue.zip 
+    - name: Extract the application archive
+      ansible.builtin.unarchive:
+        src: /tmp/catalogue.zip
         dest: /app
-        remote_src: yes
+        remote_src: true
         
