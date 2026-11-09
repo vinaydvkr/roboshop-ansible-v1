@@ -2,6 +2,12 @@
   hosts: rabbitmq
   become: true
   tasks:
+    
+    - name: copy the files
+      ansible.builtin.copy:
+        src: /etc/yum.repos.d/rabbitmq.repo
+        dest: rabbitmq.repo
+  
     - name: Install Erlang and RabbitMQ server
       dnf:
         name:
