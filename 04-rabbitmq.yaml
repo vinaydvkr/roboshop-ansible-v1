@@ -1,10 +1,10 @@
-- name: configure rabbitmq server 
-  hosts: rabbitmw
+- name: Configure RabbitMQ server
+  hosts: rabbitmq
   become: true
   tasks:
-    - name: install erlang rabbitmq-server
+    - name: Install Erlang and RabbitMQ server
       ansible.builtin.package:
         name:
           - erlang
           - rabbitmq-server
-      state: present
+        state: present
