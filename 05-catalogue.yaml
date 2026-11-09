@@ -49,7 +49,7 @@
         dest: /app
         remote_src: true
 
-    - name: Install the libraries
+    - name: Install the libraries (dependencies)
       community.general.npm:
         path: /app
 
@@ -58,10 +58,20 @@
         src: catalogue.service.j2
         dest: /etc/systemd/system/catalogue.service
 
-    - name: install mongodb-mongosh
+    - name: copy mongo repo
+      copy:
+        src: mongo.repo
+        dest: /etc/yum.repos.d/mongo.repo
+
+    - name: install mongodb client
       dnf:
         name: mongodb-mongosh
         state: present
+
+    # - name: install mongodb-mongosh
+    #   dnf:
+    #     name: mongodb-mongosh
+    #     state: present
         
 
     - name: check the products loaded or not
