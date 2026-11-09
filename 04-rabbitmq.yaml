@@ -5,8 +5,8 @@
     
     - name: copy the files
       ansible.builtin.copy:
-        src: /etc/yum.repos.d/rabbitmq.repo
-        dest: rabbitmq.repo
+        src: rabbitmq.repo
+        dest: /etc/yum.repos.d/rabbitmq.repo 
   
     - name: Install Erlang and RabbitMQ server
       dnf:
