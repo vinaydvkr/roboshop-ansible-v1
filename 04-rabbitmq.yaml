@@ -14,3 +14,9 @@
         - erlang
         - rabbitmq-server
         state: present
+
+    - name: enable and start rabbitmq
+      ansible.builtin.service:
+        name: rabbitmq
+        state: start
+        enable: yes
