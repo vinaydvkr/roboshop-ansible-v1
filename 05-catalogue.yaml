@@ -25,6 +25,6 @@
 
     - name: remove the exisiting directory
       ansible.builtin.file:
-        mkdir: /app
+        path: /app
         state: absent
         
