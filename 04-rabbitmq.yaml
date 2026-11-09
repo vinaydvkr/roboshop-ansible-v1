@@ -20,3 +20,19 @@
         name: rabbitmq-server
         state: started
         enabled: yes
+
+    - name: Create the roboshop user
+      community.rabbitmq.rabbitmq_user:
+        user: roboshop
+        password: roboshop123
+        state: present
+        update_password: on_create
+
+    - name: Grant roboshop full permissions on the default vhost
+      community.rabbitmq.rabbitmq_user:
+        user: roboshop
+        vhost: /
+        configure_priv: .*
+        read_priv: .*
+        write_priv: .*
+        state: present
