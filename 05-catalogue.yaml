@@ -22,4 +22,9 @@
         comment: "roboshop system user"
         create_home: false
         state: present
+
+    - name: remove the exisiting directory
+      ansible.buitin.file:
+        mkdir: /app
+        state: absent
         
