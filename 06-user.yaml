@@ -13,4 +13,24 @@
         name: node js
         state: present
         
-    - name: 
+    - name: user add roboshop
+      ansible.builtin.user: 
+        name: roboshop
+        system: true
+        home: /app
+        shell: /sbin/nologin 
+        comment: "roboshop system user"
+        create_home: false
+        state: present
+
+    - name: remove the existing directory
+      ansible.nuiltin.file:
+        path: /app
+        state: absent
+
+    - name: unzip the file
+      ansible.builtin.archeive:
+      path: /tmp/user.zip
+      state: absent
+
+
