@@ -14,7 +14,7 @@
         state: present
         
     - name: cart add roboshop
-      ansible.builtin.cart: 
+      ansible.builtint.user: 
         name: roboshop
         system: true
         home: /app
