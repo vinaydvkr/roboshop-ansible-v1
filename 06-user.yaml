@@ -33,7 +33,7 @@
         path: /tmp/user.zip
         state: absent
 
-    - name: create teh directory
+    - name: create the directory
       ansible.builtin.file:
         path: /app
         state: present
