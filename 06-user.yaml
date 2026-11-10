@@ -30,7 +30,7 @@
 
     - name: unzip the file
       ansible.builtin.file:
-      path: /tmp/user.zip
-      state: absent
+        path: /tmp/user.zip
+        state: absent
 
 
