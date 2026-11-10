@@ -3,3 +3,6 @@ ansible_password: DevOps321
 mysql_root_password: RoboShop@1
 catalogue_host: catalogue.vinayexpense.store
 mongodb_host: mongodb.vinayexpense.store
+cart_host: cart.vinayexpense.store
+redis_host: redis.vinayexpense.store
+rabbitmq_host: rabbitmq.vinayexpense.store
