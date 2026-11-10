@@ -24,7 +24,7 @@
         state: present
 
     - name: remove the existing directory
-      ansible.nuiltin.file:
+      ansible.builtin.file:
         path: /app
         state: absent
 
