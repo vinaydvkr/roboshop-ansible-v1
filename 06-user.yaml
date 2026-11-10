@@ -29,7 +29,7 @@
         state: absent
 
     - name: unzip the file
-      ansible.builtin.archeive:
+      ansible.builtin.file:
       path: /tmp/user.zip
       state: absent
 
