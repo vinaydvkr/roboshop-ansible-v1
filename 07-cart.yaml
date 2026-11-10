@@ -40,7 +40,7 @@
 
     - name: download cart application
       ansible.builtin.get_url:
-        url: https://raw.githubcartcontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/cart-v4.zip
+        url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/cart-v4.zip
         dest: /tmp/cart.zip
 
     - name: unzip cart zip
