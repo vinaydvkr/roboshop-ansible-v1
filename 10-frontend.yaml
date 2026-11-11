@@ -19,4 +19,15 @@
         state: started
         enabled: yes
 
-    
+    - name: Remove all files and subdirectories from the web root
+      ansible.builtin.file:
+        path: /usr/share/nginx/html
+        state: absent
+      # This removes the directory too; recreate it afterward.
+    - name: Recreate the web root
+      ansible.builtin.file:
+        path: /usr/share/nginx/html
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
