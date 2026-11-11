@@ -11,7 +11,7 @@
       state: present
 
   - name: create roboshop system user
-    user:
+    ansible.builtin.user:
       name: roboshop
       create_home: false
       home: /app
@@ -20,27 +20,42 @@
       comment: "roboshop system user"
 
   - name: remove existing app directory
-    file:
+    ansible.builtin.file:
       path: /app
       state: absent
 
   - name: remove payment.zip
-    file:
+    ansible.builtin.file:
       path: /tmp/payment.zip
       state: absent
 
   - name: create app directory
-    file:
+    ansible.builtin.file:
       path: /app
       state: directory
 
   - name: download payment application
-    get_url:
+    ansible.builtin.get_url:
       url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/payment-v4.zip
       dest: /tmp/payment.zip
 
   - name: unzip payment
-    unarchive:
+    ansible.builtin.unarchive:
       src: /tmp/payment.zip
       dest: /app
       remote_src: yes  
+
+  - name: copy shipping service
+    ansible.builtin.template:
+      src: shipping.service.j2
+      dest: /etc/systemd/system/shipping.service
+
+  - name: daemon reload
+    ansible.builtin.systemd_service:
+      daemon_reload: true
+
+  - name: start and enable shipping
+    ansible.builtin.service:
+      name: shipping
+      state: restarted
+      enabled: yes
