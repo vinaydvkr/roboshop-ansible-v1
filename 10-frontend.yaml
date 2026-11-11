@@ -1,0 +1,22 @@
+- name: configure nginx server
+  hosts: frontend
+  become: true
+  tasks:
+    - name: disable nginx
+      command: dnf module disable nginx -y
+    
+    - name: enable nginx
+      command: dnf module enable nginx:1.26 -y
+
+    - name: install nginx
+      package:
+        name: nginx
+        state: present
+    
+    - name: start and enable nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    
