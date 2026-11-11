@@ -43,7 +43,7 @@
         state: absent
 
     - name: remove the unzip file
-      ansible.builtin.unarchive:
+      ansible.builtin.file:
         name: /tmp/shipping.zip
         state: absent
     
