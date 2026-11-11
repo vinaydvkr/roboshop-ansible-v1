@@ -36,4 +36,22 @@
         system: true
         shell: /sbin/nologin 
         comment: "roboshop system user"
+
+    - name: delete the existing directory
+      ansible.builtin.file:
+        path: /app
+        state: absent
+
+    - name: remove the unzip file
+      ansible.builtin.unarchive:
+        name: /tmp/shipping.zip
+        state: absent
+    
+    - name: create the app directory
+      ansible.builtin.file:
+        path: /app
+        state: directory
+        
+
+      
       
