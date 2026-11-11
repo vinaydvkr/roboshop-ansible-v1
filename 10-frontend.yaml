@@ -39,6 +39,6 @@
         dest: /tmp/frontend.zip
 
     - name: unzip frontend
-      ansible.builtin.unarcheive:
+      ansible.builtin.unarchive:
         src: /tmp/frontend.zip
         dest: /usr/share/nginx/html
