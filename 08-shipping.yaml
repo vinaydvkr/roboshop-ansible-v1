@@ -64,62 +64,62 @@
         remote_src: yes
 
     - name: mvn version without JAVA_HOME
-    command: mvn --version
-    args:
+      command: mvn --version
+      args:
+        chdir: /app
+      register: mvn_default
+
+    - name: print mvn version without JAVA_HOME
+      debug:
+        msg: "{{ mvn_default.stdout_lines }}"
+
+    - name: build shipping
+      command: mvn clean package
+      args:
       chdir: /app
-    register: mvn_default
-
-  - name: print mvn version without JAVA_HOME
-    debug:
-      msg: "{{ mvn_default.stdout_lines }}"
-
-  - name: build shipping
-    command: mvn clean package
-    args:
-     chdir: /app
     # environment:
     #   JAVA_HOME: "{{ java25.stdout | dirname | dirname  }}"
 
-  - name: move shipping jar file
-    command: mv target/shipping.jar shipping.jar
-    args:
-     chdir: /app
+    - name: move shipping jar file
+      command: mv target/shipping.jar shipping.jar
+      args:
+      chdir: /app
 
-  - name: check cities data exist or not
-    command: mysql -h "{{ mysql_host }}" -u root -p{{ mysql_root_password }} -N -B -e "SELECT COUNT(*) FROM cities.cities;"
-    register: cities_count
-    ignore_errors: true
-    
-
-  - name: print cities_count
-    debug:
-      msg: "{{ cities_count }}"
-    
-
-  - name: load cities data into mysql
-    shell: mysql -h "{{ mysql_host }}" -u root -p{{ mysql_root_password }} < /app/db/master-data.sql
-    when: cities_count.rc != 0 or cities_count.stdout | int == 0
-    
-
-  - name: create app user in mysql
-    shell: mysql -h "{{ mysql_host }}" -u root -p{{ mysql_root_password }} < /app/db/app-user.sql
-    
-
-  - name: copy shipping service
-    template:
-      src: shipping.service.j2
-      dest: /etc/systemd/system/shipping.service
-
-  - name: daemon reload
-    systemd_service:
-      daemon_reload: true
-
-  - name: start and enable shipping
-    service:
-      name: shipping
-      state: restarted
-      enabled: yes
-
-
+    - name: check cities data exist or not
+      command: mysql -h "{{ mysql_host }}" -u root -p{{ mysql_root_password }} -N -B -e "SELECT COUNT(*) FROM cities.cities;"
+      register: cities_count
+      ignore_errors: true
       
+
+    - name: print cities_count
+      debug:
+        msg: "{{ cities_count }}"
       
+
+    - name: load cities data into mysql
+      shell: mysql -h "{{ mysql_host }}" -u root -p{{ mysql_root_password }} < /app/db/master-data.sql
+      when: cities_count.rc != 0 or cities_count.stdout | int == 0
+      
+
+    - name: create app user in mysql
+      shell: mysql -h "{{ mysql_host }}" -u root -p{{ mysql_root_password }} < /app/db/app-user.sql
+      
+
+    - name: copy shipping service
+      template:
+        src: shipping.service.j2
+        dest: /etc/systemd/system/shipping.service
+
+    - name: daemon reload
+      systemd_service:
+        daemon_reload: true
+
+    - name: start and enable shipping
+      service:
+        name: shipping
+        state: restarted
+        enabled: yes
+
+
+        
+        
