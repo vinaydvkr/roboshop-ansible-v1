@@ -118,7 +118,7 @@
         ttl: 1
         type: A
       loop: "{{ instance }}"
-      when: instance_action == "delete"
+      when: action == "delete"
 
     - name: delete R53 record for frontend
       amazon.aws.route53:
@@ -136,6 +136,6 @@
         region: us-east-1
         wait: false
       loop: "{{ instance }}"
-      when: instance_action == "delete"
+      when: action == "delete"
 
 
