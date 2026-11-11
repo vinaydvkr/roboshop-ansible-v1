@@ -1,7 +1,7 @@
 - name: configure payment server
   hosts: payment
   become: true
- tasks:
+  tasks:
 
   - name: install python 3.14
     dnf:
