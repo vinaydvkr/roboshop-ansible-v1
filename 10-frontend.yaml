@@ -24,6 +24,7 @@
         path: /usr/share/nginx/html
         state: absent
       # This removes the directory too; recreate it afterward.
+    
     - name: Recreate the web root
       ansible.builtin.file:
         path: /usr/share/nginx/html
@@ -31,3 +32,13 @@
         owner: root
         group: root
         mode: "0755"
+
+    - name: download the frontend application
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/frontend-v4.zip
+        dest: /tmp/frontend.zip
+
+    - name: unzip frontend
+      ansible.builtin.unarcheive:
+        src: /tmp/frontend.zip
+        dest: /usr/share/nginx/html
