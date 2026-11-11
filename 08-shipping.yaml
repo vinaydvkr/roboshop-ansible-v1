@@ -76,7 +76,7 @@
     - name: build shipping
       command: mvn clean package
       args:
-      chdir: /app
+        chdir: /app
     # environment:
     #   JAVA_HOME: "{{ java25.stdout | dirname | dirname  }}"
 
