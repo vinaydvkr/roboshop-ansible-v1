@@ -58,7 +58,7 @@
         dest: /tmp/shipping.zip
 
     - name: unzip the application
-      ansible.builtin.unraceive:
+      ansible.builtin.unarchive:
         src: /tmp/shipping.zip
         dest: /app
         remote_src: yes
