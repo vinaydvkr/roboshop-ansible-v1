@@ -63,6 +63,14 @@
         dest: /app
         remote_src: yes
 
+    # - name: install dependencies
+    #   command: mvn clean package
+    #   args:
+    #     chdir: /app
+    #     environment:
+    #       JAVA_HOME:
+    #       MAVEN_OPTS: 
+
 
       
       
