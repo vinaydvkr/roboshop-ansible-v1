@@ -27,4 +27,13 @@
       copy:
         content: "export JAVA_HOME={{ java25.stdout | dirname | dirname  }}"
         dest: /etc/profile.d/java.sh
+
+    - name: create roboshop user
+      ansible.builtin.user: 
+        name: roboshop 
+        create_home: false
+        home: /app
+        system: true
+        shell: /sbin/nologin 
+        comment: "roboshop system user"
       
