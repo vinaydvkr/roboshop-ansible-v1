@@ -52,6 +52,9 @@
         path: /app
         state: directory
         
-
+    - name: download the shiipiong application
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/shipping-v4.zip
+        dest: /tmp/shipping.zip
       
       
