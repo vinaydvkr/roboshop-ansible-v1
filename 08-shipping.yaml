@@ -12,4 +12,4 @@
         - java-25-openjdk-devel
         state: present
     
-    - name: 
+    
