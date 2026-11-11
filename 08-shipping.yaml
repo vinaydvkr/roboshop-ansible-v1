@@ -12,4 +12,19 @@
         - java-25-openjdk-devel
         state: present
     
-    
+    - name: find java25 path
+      shell: readlink -f $(ls /usr/lib/jvm/java-25-openjdk*/bin/java | head -1)
+      register: java25
+
+    - name: print the output
+      debug:
+        msg: "{{ java25 }}"
+
+    - name: make java25 as default
+      command: alternatives --set java {{ java25.stdout }}
+
+    - name: set JAVA_HOME
+      copy:
+        content: "export JAVA_HOME={{ java25.stdout | dirname | dirname  }}"
+        dest: /etc/profile.d/java.sh
+      
