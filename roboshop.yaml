@@ -70,7 +70,7 @@
   gather_facts: false
 
   vars:
-    instance: ["mongodb", "redis", "mysql", "rabbitmq", "catalogue", "user", "cart"]
+    instance: ["mongodb", "redis", "mysql", "rabbitmq", "catalogue", "user", "cart", "shipping", "payment", "frontend"]
     instance_action: create
     domain_name: vinayexpense.store
     ami_id: ami-0055977a6e828a4f4
