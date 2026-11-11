@@ -83,7 +83,7 @@
     - name: move shipping jar file
       command: mv target/shipping.jar shipping.jar
       args:
-      chdir: /app
+        chdir: /app
 
     - name: check cities data exist or not
       command: mysql -h "{{ mysql_host }}" -u root -p{{ mysql_root_password }} -N -B -e "SELECT COUNT(*) FROM cities.cities;"
