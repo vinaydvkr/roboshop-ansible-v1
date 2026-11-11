@@ -43,3 +43,13 @@
         src: /tmp/frontend.zip
         dest: /usr/share/nginx/html
         remote_src: yes
+
+    - name: copy roboshop.conf
+      ansible.builtin.template:
+        src: roboshop.conf.j2
+        dest: /etc/nginx/default.d/roboshop.conf
+
+    - name: restart frontend
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
